@@ -185,5 +185,4 @@ class ProviderTests(APITestCase):
         response = self.client.get('/provider?lat=-0.0&lon=-0.0')
         response = ProviderSerializer(data=response.data, many=True)
         response.is_valid()
-        print (response.data)
         self.assertEqual(len(response.data), 0)
