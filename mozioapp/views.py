@@ -32,7 +32,6 @@ class ProviderList(APIView):
             points = map(self.array_map, Point.objects.filter(polygon=polygon.id))
             if len(points) > 0:
                 if MOZIOPolygon(points).contains(lat, lon):
-                    print ("true")
                     providers.append(polygon.provider.id)
         return Provider.objects.filter(id__in=tuple(providers))
 
@@ -79,7 +78,7 @@ class PolygonList(APIView):
     def get_object(self, pk):
         try:
             return Polygon.objects.filter(provider=Provider.objects.get(pk=pk).id)
-        except Polygon.DoesNotExist:
+        except Provider.DoesNotExist:
             raise Http404
 
     def get(self, request, pk):

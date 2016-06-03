@@ -19,5 +19,4 @@ class MOZIOPolygon():
                         self.polygon[j][0] - self.polygon[i][0]) < x)
                 j = i
 
-        print (oddNodes)
         return oddNodes
