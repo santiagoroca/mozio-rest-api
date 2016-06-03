@@ -1,5 +1,3 @@
-import sys
-
 from mozioapp.models import Provider
 from mozioapp.models import Polygon
 from mozioapp.models import Point
@@ -15,7 +13,6 @@ from rest_framework import status
 
 from collections import namedtuple
 
-from osgeo import ogr
 from geojson import Polygon as GEOPolygon
 from polygon import MOZIOPolygon
 
@@ -116,11 +113,8 @@ class PointList(APIView):
 
 
 class PointDetail(APIView):
-    def post(self, request, pk=None):
-        if pk is not None:
-            serializer = PointSerializer(data=[Point(pk, point[0], point[1]) for point in ogr.CreateGeometryFromJson(request.data)], many=True)
-        else:
-            serializer = PointSerializer(data=request.data, many=True)
+    def post(self, request):
+        serializer = PointSerializer(data=request.data, many=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
